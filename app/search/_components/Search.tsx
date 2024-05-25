@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export const revalidate = 0;
@@ -12,10 +12,18 @@ const Search = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const [perm, setPerm] = useState<null | string>(() =>
-    localStorage.getItem("verify")
-  );
-  let searches: string[] = JSON.parse(localStorage.getItem("searches")!) || [];
+
+  const [perm, setPerm] = useState<null | string>(null);
+  const [searches, setSearches] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setPerm(localStorage.getItem("verify"));
+      const storedSearches =
+        JSON.parse(localStorage.getItem("searches")!) || [];
+      setSearches(storedSearches);
+    }
+  }, []);
 
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
@@ -25,11 +33,12 @@ const Search = () => {
       if (perm) {
         const searchTermPattern = new RegExp(term, "i");
         if (!searches.some((search) => searchTermPattern.test(search))) {
-          searches.push(term);
-          if (searches.length > 5) {
-            searches.shift();
+          const updatedSearches = [...searches, term];
+          if (updatedSearches.length > 5) {
+            updatedSearches.shift();
           }
-          localStorage.setItem("searches", JSON.stringify(searches));
+          localStorage.setItem("searches", JSON.stringify(updatedSearches));
+          setSearches(updatedSearches);
         }
       }
     } else {
