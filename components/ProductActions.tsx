@@ -89,7 +89,8 @@ export const AddToCart = ({ id }: { id: string }) => {
             });
           });
         }}
-        className="my-2 w-full"
+        variant="ghost"
+        className="my-2 w-full border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
       >
         {isPending ? (
           <Loader2 className="size-4 animate-spin" />

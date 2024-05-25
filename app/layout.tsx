@@ -33,7 +33,7 @@ export default async function RootLayout({
       <ViewTransitions>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased pb-28",
             dm_sans.variable
           )}
         >

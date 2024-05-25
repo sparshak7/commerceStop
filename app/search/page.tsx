@@ -44,9 +44,9 @@ const SearchPage = async({searchParams}: SearchPageProps) => {
   }
 
   return (
-    <div>
+    <div className="pb-28 md:pb-2">
       <Search />
-      <div className="mt-4 mb-32">
+      <div className="mt-4">
         {searchPerformed ? (
           searchRes.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
@@ -64,7 +64,13 @@ const SearchPage = async({searchParams}: SearchPageProps) => {
             Try searching!
           </div>
         )}
-        {searchPerformed && searchRes.length > 0 && <ProductPagination currentPage={currentPage} totalItems={totalItems} itemsPerPage={itemsPerPage} />}
+        {searchPerformed && searchRes.length > 0 && (
+          <ProductPagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+          />
+        )}
       </div>
       {/* <ProductPagination /> */}
     </div>

@@ -33,8 +33,9 @@ type NavbarProps = {
 
 const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
   const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
+
   return (
-    <nav className="max-w-6xl mx-auto p-4 flex justify-between items-center gap-6 mb-12 border-b border-gray-600">
+    <nav className="max-w-6xl mx-auto p-2 flex justify-between items-center gap-6 mb-12 border-b border-gray-600">
       <div>
         <Link href="/">
           {/* <h1 className="text-xl italic">
@@ -46,11 +47,11 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
       <div className="hidden items-center gap-8 md:flex">
         {adminPerm && (
           <NavLinks href="/admin/dashboard">
-            <Lock className="size-5 sm:size-7"/>
+            <Lock className="size-5 sm:size-7" />
           </NavLinks>
         )}
         <NavLinks href="/search">
-          <Search className="size-5 sm:size-7"/>
+          <Search className="size-5 sm:size-7" />
         </NavLinks>
         {cartCount !== -1 ? (
           <NavLinks
@@ -58,7 +59,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
             // className="p-4 hover:text-secondary-foreground focus-visible:text-secondary-foreground select-none"
           >
             <div className="relative py-2">
-              <ShoppingCart className="size-5 sm:size-7"/>
+              <ShoppingCart className="size-5 sm:size-7" />
               {cartCount! > 0 && (
                 <div className="absolute -top-1 -right-4">
                   <p className="flex h-1 w-1 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
@@ -70,7 +71,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
           </NavLinks>
         ) : (
           <NavLinks href="/api/auth/login">
-            <ShoppingCart className="size-5 sm:size-7"/>
+            <ShoppingCart className="size-5 sm:size-7" />
           </NavLinks>
         )}
       </div>
@@ -101,6 +102,9 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <LogoutLink className="text-red-500">Log Out</LogoutLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

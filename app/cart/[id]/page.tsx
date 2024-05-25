@@ -29,7 +29,7 @@ const CartItems = async ({ params }: CartItemsProps) => {
   }
 
   return (
-    <div className="p-4">
+    <div className="pb-28 px-4 md:pb-2">
       <h1 className="mb-6 text-2xl">Your Cart Items</h1>
       <div className="flex flex-col gap-4">
         {cart.map((item) => (

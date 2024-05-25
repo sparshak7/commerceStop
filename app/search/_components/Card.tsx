@@ -25,7 +25,7 @@ const Card = ({ product }: CardProps) => {
           <h2>₹{new Intl.NumberFormat("en-US").format(product.price)}</h2>
           <div className="flex items-center gap-2 flex-wrap">
             {product.categories.slice(0, 5).map((c, id) => (
-              <Badge className="bg-accent text-secondary-foreground border-accent-foreground">
+              <Badge key={id} className="bg-accent text-secondary-foreground border-accent-foreground">
                 {c}
               </Badge>
             ))}

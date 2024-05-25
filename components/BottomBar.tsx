@@ -29,7 +29,7 @@ type BottomBarProps = {
 const BottomBar = ({ adminPerm, cartCount }: BottomBarProps) => {
   const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
   return (
-    <div className="fixed bottom-0 right-0 w-full py-2 px-4 border-t border-gray-600 md:hidden z-[1000] bg-black">
+    <div className="fixed bottom-0 right-0 w-full py-2 px-4 border-t border-gray-600 md:hidden z-[49] bg-black">
       <nav className="flex justify-evenly items-center">
         {adminPerm && (
           <NavLinks href="/admin/dashboard">

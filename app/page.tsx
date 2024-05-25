@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "next-view-transitions";
 import { AddToCart } from "@/components/ProductActions";
 import CardGrid from "@/components/CardGrid";
+import Cookie from "@/components/Cookie";
 
 export default async function Home() {
   const products = await prisma.product.findMany({
@@ -29,6 +30,7 @@ export default async function Home() {
   }
   return (
     <main>
+      <Cookie />
       {/* <div className="grid grid-cols-3 gap-6">
         {products.map((product) => (
           <div>
