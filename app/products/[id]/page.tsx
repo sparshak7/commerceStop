@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import CheckOutButton from "@/components/CheckOutButton";
 
 type ProductDetailsProps = {
   params: {
@@ -66,8 +67,8 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
                 Already in cart
               </Link>
             )}
-
-            <Link href="#">
+            <CheckOutButton product={product} />
+            {/* <Link href="#">
               <Button
                 className="border-accent bg-secondary-foreground text-background w-full"
                 variant="ghost"
@@ -76,7 +77,8 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               >
                 {product.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
-            </Link>
+              
+            </Link> */}
           </div>
         </div>
       </div>

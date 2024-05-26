@@ -45,7 +45,6 @@ export default async function RootLayout({
 
           {children}
           </div>
-          <Footer />
           
         </body>
       </ViewTransitions>
