@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import prisma from "./lib/db";
 import { Toaster } from "react-hot-toast";
 import BottomBar from "@/components/BottomBar";
+import Footer from "@/components/Footer";
 
 const dm_sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -33,7 +34,7 @@ export default async function RootLayout({
       <ViewTransitions>
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased pb-28",
+            "min-h-screen bg-background font-sans antialiased pb-28 md:pb-0",
             dm_sans.variable
           )}
         >
@@ -44,6 +45,7 @@ export default async function RootLayout({
 
           {children}
           </div>
+          <Footer />
           
         </body>
       </ViewTransitions>

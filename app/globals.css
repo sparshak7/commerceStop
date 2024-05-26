@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply dark bg-primary text-secondary-foreground
+  @apply dark bg-primary text-secondary-foreground scroll-smooth
 }
 
 ::-webkit-scrollbar {

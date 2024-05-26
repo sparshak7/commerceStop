@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 type ProductDetailsProps = {
   params: {
@@ -19,6 +20,17 @@ type ProductDetailsProps = {
 
 const ProductDetails = async ({ params }: ProductDetailsProps) => {
   const product = await prisma.product.findUnique({ where: { id: params.id } });
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  const cartItems = await prisma.cart.findMany({
+    where: {
+      kindeAuth: user?.id,
+    },
+  });
+
+  const isInCart = cartItems.some((cartItem) => cartItem?.id === product?.id);
+
   if (product == null)
     return (
       <div className="flex justify-between items-center text-2xl font-bold">
@@ -43,13 +55,24 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
             ₹{new Intl.NumberFormat().format(product.price)}
           </h2>
           {/* <p className="text-base font-medium">{product.description}</p> */}
-          <div className="flex gap-2 flex-col md:flex-row md:items-center">
-            <AddToCart id={product.id} />
-            <Link href={`/products/purchase/${product.id}`}>
+          <div className="flex gap-4 flex-col md:flex-row md:items-center">
+            {!isInCart ? (
+              <AddToCart id={product.id} />
+            ) : (
+              <Link
+                href={`/cart/${user?.id}`}
+                className="bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out px-2 py-3 rounded-2xl"
+              >
+                Already in cart
+              </Link>
+            )}
+
+            <Link href="#">
               <Button
                 className="border-accent bg-secondary-foreground text-background w-full"
                 variant="ghost"
-                disabled={!product.isAvailableForPurchase}
+                // disabled={!product.isAvailableForPurchase}
+                disabled
               >
                 {product.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
@@ -70,9 +93,9 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
             <AccordionTrigger>Tags</AccordionTrigger>
             <AccordionContent>
               <div className="flex gap-4 flex-wrap items-center">
-                {product.categories.map((c) => (
-                  <Link href={`/products/categories/${c}`}>
-                    <Badge key={c} className="bg-accent text-accent-foreground">
+                {product.categories.map((c, id) => (
+                  <Link href={`/products/categories/${c}`} key={id}>
+                    <Badge className="bg-accent text-accent-foreground">
                       {c}
                     </Badge>
                   </Link>

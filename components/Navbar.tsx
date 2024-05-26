@@ -35,7 +35,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
   const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
 
   return (
-    <nav className="max-w-6xl mx-auto p-2 flex justify-between items-center gap-6 mb-12 border-b border-gray-600">
+    <nav className="max-w-6xl mx-auto p-2 flex justify-between items-center gap-6 md:mb-4 md:border-b border-gray-600">
       <div>
         <Link href="/">
           {/* <h1 className="text-xl italic">

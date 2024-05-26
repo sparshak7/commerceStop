@@ -22,14 +22,16 @@ const Opt = () => {
       if (msg === "N") {
         if (localStorage.getItem("verify")) {
           localStorage.removeItem("verify");
-          toast.success("Opted out successfully.");
+          toast.success("Opted out successfully.", {position: "bottom-right"});
         } else {
           localStorage.setItem("verify", "N");
-          toast.success("Opted out successfully.");
+          toast.success("Opted out successfully.", {
+            position: "bottom-right",
+          });
         }
       } else {
         localStorage.setItem("verify", "Y");
-        toast.success("Opted in successfully.");
+        toast.success("Opted in successfully.", { position: "bottom-right" });
       }
       setVerify(localStorage.getItem("verify"));
       router.refresh();
