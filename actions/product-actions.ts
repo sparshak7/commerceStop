@@ -28,6 +28,7 @@ const addSchema = z.object({
   image: imageSchema.refine((file) => file.size > 0, {
     message: "File size should be more than 0.",
   }),
+  stripe_link: z.string(),
 });
 
 const editSchema = addSchema.extend({
@@ -60,7 +61,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
           description: data.description,
           price: data.price,
           image: path,
-          categories
+          categories,
+          stripe_link: data.stripe_link,
         },
       });
     }
@@ -146,7 +148,8 @@ export async function editProduct(
             description: data.description,
             price: data.price,
             image: path,
-            categories
+            categories,
+            stripe_link: data.stripe_link,
           },
         });
       }
@@ -157,7 +160,8 @@ export async function editProduct(
           name: data.name,
           description: data.description,
           price: data.price,
-          categories
+          categories,
+          stripe_link: data.stripe_link,
         },
       });
     }

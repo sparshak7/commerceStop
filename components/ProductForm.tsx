@@ -86,7 +86,9 @@ const ProductForm = ({product}: EditProductFormProps) => {
             height={250}
             alt={product?.name}
           />
-        ) : "Loading"}
+        ) : (
+          "Loading"
+        )}
         {error.image && <p className="text-red-500">{error.image}</p>}
       </div>
       <div className="space-y-2">
@@ -109,8 +111,20 @@ const ProductForm = ({product}: EditProductFormProps) => {
               </Badge>
             ))}
         </div>
-
-        {error.categories && <p className="text-red-500">{error.categories}</p>}
+        <div className="space-y-2">
+          <Label htmlFor="stripe_link" className="text-secondary-foreground">
+            Stripe link
+          </Label>
+          <Input
+            type="text"
+            id="stripe_link"
+            name="stripe_link"
+            autoComplete="off"
+            className="text-secondary-foreground"
+            defaultValue={product?.stripe_link || ""}
+          />
+        </div>
+        {error.stripe_link && <p className="text-red-500">{error.stripe_link}</p>}
       </div>
       <SubmitButton />
     </form>

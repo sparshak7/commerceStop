@@ -68,17 +68,6 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               </Link>
             )}
             <CheckOutButton product={product} />
-            {/* <Link href="#">
-              <Button
-                className="border-accent bg-secondary-foreground text-background w-full"
-                variant="ghost"
-                // disabled={!product.isAvailableForPurchase}
-                disabled
-              >
-                {product.isAvailableForPurchase ? "Buy" : "Out of Stock"}
-              </Button>
-              
-            </Link> */}
           </div>
         </div>
       </div>

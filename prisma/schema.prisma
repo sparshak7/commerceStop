@@ -23,16 +23,18 @@ datasource db {
 // }
 
 model Product {
-  id                     String   @id @default(uuid())
+  id                     String      @id @default(uuid())
   name                   String
   price                  Int
   description            String
   image                  String?
-  isAvailableForPurchase Boolean  @default(true)
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  isAvailableForPurchase Boolean     @default(true)
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
   Cart                   Cart[]
-  categories String[]
+  categories             String[]
+  stripe_link            String
+  Purchased              Purchased[]
 }
 
 model Cart {
@@ -42,4 +44,11 @@ model Cart {
   updatedAt DateTime @updatedAt
   Product   Product? @relation(fields: [id], references: [id])
   quantity  Int      @default(1)
+}
+
+model Purchased {
+  id      String   @id
+  Product Product? @relation(fields: [id], references: [id])
+  createdAt DateTime @default(now())
+  kindeAuth String
 }
