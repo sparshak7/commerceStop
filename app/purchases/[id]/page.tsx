@@ -61,11 +61,15 @@ const Purchases = async ({ params }: PurchaseProps) => {
                 </h2>
                 <h2 className="line-clamp-2 md:line-clamp-none">
                   Purchased on:{" "}
-                  {`${new Intl.DateTimeFormat("en-IN").format(
-                    new Date(item.createdAt)
-                  )}, ${new Intl.DateTimeFormat("en-US", {hour: "numeric", minute: "numeric"}).format(
-                    new Date(item.createdAt)
-                  )}`}
+                  {`${new Intl.DateTimeFormat("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                    timeZone: "Asia/Kolkata",
+                  }).format(item.createdAt)}`}
                 </h2>
               </div>
             </div>

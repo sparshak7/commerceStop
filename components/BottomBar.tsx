@@ -1,24 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import {
-  LoginLink,
-  LogoutLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
-import { Link } from "next-view-transitions";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { ComponentProps, ReactNode } from "react";
-import { Loader2, Lock, Search, ShoppingCart } from "lucide-react";
-import logo_white from "../public/logo_white.png";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import { Lock, Search, ShoppingCart } from "lucide-react";
 import { NavLinks } from "./Navbar";
 
 type BottomBarProps = {
@@ -27,9 +12,9 @@ type BottomBarProps = {
 };
 
 const BottomBar = ({ adminPerm, cartCount }: BottomBarProps) => {
-  const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
+  const { user } = useKindeBrowserClient();
   return (
-    <div className="fixed bottom-0 right-0 w-full py-2 px-4 border-t border-gray-600 md:hidden z-[49] bg-black">
+    <div className="fixed bottom-0 right-0 w-full py-2 px-4 border-t border-accent md:hidden z-[49] bg-black">
       <nav className="flex justify-evenly items-center">
         {adminPerm && (
           <NavLinks href="/admin/dashboard">

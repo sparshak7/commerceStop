@@ -11,6 +11,7 @@ const Banner = () => {
       behavior: "smooth"
     })
   }
+
   return (
     <div className="h-[200px] md:h-[300px] relative mb-4">
       <Image
@@ -21,8 +22,8 @@ const Banner = () => {
       />
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-65">
         <div className="flex flex-col gap-4 items-center">
-          <p className="text-sm md:text-xl font-semibold">Summer sale is on! Get 40% off on all products.</p>
-          <Button variant="ghost" onClick={handleClick} className="bg-red-500 text-secondary-foreground w-1/2">Start shopping</Button>
+          <p className="text-xs sm:text-sm md:text-xl font-bold">Summer sale is on! Get 40% off on all products.</p>
+          <Button variant="ghost" onClick={handleClick} className="bg-accent-foreground  text-secondary w-1/2">Start shopping</Button>
         </div>
       </div>
     </div>

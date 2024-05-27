@@ -9,13 +9,7 @@ import {
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ComponentProps, ReactNode } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { ComponentProps } from "react";
 import { Loader2, Lock, Search, ShoppingCart } from "lucide-react";
 import logo_white from "../public/logo_white.png";
 import {
@@ -35,31 +29,25 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
   const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
 
   return (
-    <nav className="max-w-6xl mx-auto p-2 flex justify-between items-center gap-6 md:mb-4 md:border-b border-gray-600">
-      <div>
-        <Link href="/">
-          {/* <h1 className="text-xl italic">
-            {`Zephyr ${adminPerm ? "(Admin)" : ""}`}
-          </h1> */}
-          <Image alt="logo" src={logo_white} width={90} height={90} />
-        </Link>
-      </div>
+    <nav className="max-w-6xl mx-auto px-4 md:px-2 py-2 flex justify-between items-center gap-6 mb-4 border-b border-gray-600">
+      <Link href="/">
+        <Image alt="brand_logo" src={logo_white} width={90} height={90} />
+      </Link>
       <div className="hidden items-center gap-8 md:flex">
         {adminPerm && (
           <NavLinks href="/admin/dashboard">
-            <Lock className="size-5 sm:size-7" />
+            <Lock className="size-8" />
           </NavLinks>
         )}
         <NavLinks href="/search">
-          <Search className="size-5 sm:size-7" />
+          <Search className="size-8" />
         </NavLinks>
         {cartCount !== -1 ? (
           <NavLinks
             href={`/cart/${user?.id}`}
-            // className="p-4 hover:text-secondary-foreground focus-visible:text-secondary-foreground select-none"
           >
             <div className="relative py-2">
-              <ShoppingCart className="size-5 sm:size-7" />
+              <ShoppingCart className="size-8" />
               {cartCount! > 0 && (
                 <div className="absolute -top-1 -right-4">
                   <p className="flex h-1 w-1 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
@@ -71,29 +59,29 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
           </NavLinks>
         ) : (
           <NavLinks href="/api/auth/login">
-            <ShoppingCart className="size-5 sm:size-7" />
+            <ShoppingCart className="size-8" />
           </NavLinks>
         )}
       </div>
       <div className="items-center gap-6 flex">
         {!isLoading ? (
           !isAuthenticated && (
-            <LoginLink className="rounded-2xl p-2 border border-secondary bg-accent text-secondary-foreground">
+            <LoginLink className="rounded-2xl px-4 py-2 border border-border bg-secondary text-secondary-foreground hover:opacity-75 transition-opacity duration-200 ease-in-out">
               Login
             </LoginLink>
           )
         ) : (
-          <Loader2 className="size-6 animate-spin" />
+          <Loader2 className="size-7 animate-spin" />
         )}
         {user && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              {user.picture && (
+              {user?.picture && (
                 <Image
-                  width={40}
-                  height={40}
+                  width={45}
+                  height={45}
                   alt="User Image"
-                  src={user.picture}
+                  src={user?.picture}
                   className="rounded-full cursor-pointer"
                 />
               )}
@@ -101,36 +89,18 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <LogoutLink className="text-red-500">Log Out</LogoutLink>
+                  <LogoutLink className="text-red-500 w-full">Log Out</LogoutLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/profile">Profile</Link>
+                  <Link href="/profile" className="w-full">Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={`/purchases/${user?.id}`}>Your Orders</Link>
+                  <Link href={`/purchases/${user?.id}`} className="w-full">Your Orders</Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-        {/* <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              {user?.picture && (
-                <Image
-                  width={30}
-                  height={30}
-                  alt="User Image"
-                  src={user.picture}
-                  className="rounded-full"
-                />
-              )}
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{user?.email && `Logged in as ${user.email}`}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider> */}
       </div>
     </nav>
   );
