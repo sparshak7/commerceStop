@@ -106,6 +106,9 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
                 <DropdownMenuItem>
                   <Link href="/profile">Profile</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/purchases/${user?.id}`}>Your Orders</Link>
+                </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>

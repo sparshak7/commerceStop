@@ -19,9 +19,9 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { FormEvent, useState } from "react";
+import { Copy } from "lucide-react";
+import toast from "react-hot-toast";
 
 type CheckoutFormProps = {
   product: Product;
@@ -41,14 +41,14 @@ const CheckoutForm = ({ product, clientSecret }: CheckoutFormProps) => {
         <div className="flex flex-col px-2 pt-20 h-full items-center justify-center">
           <div className="relative h-[200px] w-full">
             <Image
-              alt={product.name}
+              alt={product?.name}
               src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product?.image}`}
               fill
               className="object-contain"
             />
           </div>
           <div className="my-8">
-            <h1 className="text-2xl font-bold">{`${product.name} (x${quantity})`}</h1>
+            <h1 className="text-2xl font-bold">{`${product?.name} (x${quantity})`}</h1>
           </div>
           <div className="flex items-center gap-4">
             <Button
@@ -75,7 +75,7 @@ const CheckoutForm = ({ product, clientSecret }: CheckoutFormProps) => {
             options={{ clientSecret, appearance: { theme: "night" } }}
             stripe={stripePromise}
           >
-            <Form price={product.price} quantity={quantity} />
+            <Form price={product?.price} quantity={quantity} />
           </Elements>
         </div>
       </div>
@@ -115,6 +115,16 @@ function Form({ price, quantity }: { price: number; quantity: number }) {
         setLoading(false);
       });
   }
+
+  const handleCopy = () => {
+    try {
+      navigator?.clipboard.writeText("4000003560000008");
+      toast.success("Copied to clipboard", {position: "top-center"});
+    } catch (error) {
+      toast.error("Failed to copy", {position: "top-center"})
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <Card>
@@ -127,11 +137,19 @@ function Form({ price, quantity }: { price: number; quantity: number }) {
                 Quantity: {quantity}
               </CardTitle>
             </div>
-            <CardTitle className="text-sm font-bold text-red-500">
-              Please use the India Stripe Test Card Number 4000003560000008.
-              This is a personal project so refrain from using actual card
-              number.
-            </CardTitle>
+            <div className="flex flex-col">
+              <CardTitle className="text-sm font-bold text-red-500">
+                Please use the India Stripe Test Card Number.
+                This is a personal project so refrain from using actual card
+                number.
+              </CardTitle>
+              <div className="flex gap-4 items-center mt-2">
+                <p className="text-sm font-bold text-red-500">4000003560000008</p>
+                <div onClick={handleCopy}>
+                  <Copy className="size-4 cursor-pointer"/>
+                </div>
+              </div>
+            </div>
           </div>
           {errors && (
             <CardDescription className="text-destructive">

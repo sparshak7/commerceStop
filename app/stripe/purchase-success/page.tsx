@@ -1,5 +1,4 @@
 import prisma from "@/app/lib/db";
-import SuccessRedirect from "@/components/SuccessRedirect";
 import { Button } from "@/components/ui/button";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Link } from "next-view-transitions";
@@ -47,26 +46,32 @@ const PaymentSuccess = async ({ searchParams }: PaymentSuccessProps) => {
 
   const isSuccess = paymentIntent.status === "succeeded";
 
-  if (isSuccess) {
-    await prisma.purchased.create({
-      data: {
-        kindeAuth: user?.id!,
-        id: paymentIntent.metadata.productId,
-      },
-    });
-  } 
-
   return (
     <>
       {isSuccess ? (
-        <SuccessRedirect />
+        <div className="h-full mt-60 mb:mt-68 flex justify-center items-center px-4">
+          <div className="flex flex-col gap-2 items-center">
+            <p className="text-2xl font-bold">
+              You have succesfully bought the product.
+            </p>
+            <Link
+              href={`/purchases/${user?.id}`}
+            >
+              <Button className="bg-red-500 my-2 w-full" variant="ghost">
+                Check orders
+              </Button>
+            </Link>
+          </div>
+        </div>
       ) : (
-        <div className="h-full mt-60 mb:mt-68 flex justify-center items-center">
+        <div className="h-full mt-60 mb:mt-68 flex justify-center items-center px-4">
           <div className="flex flex-col gap-2 items-center">
             <p className="text-2xl font-bold">
               The transaction could not be completed.
             </p>
-            <Link href={`/products/purchase/${paymentIntent.metadata.productId}`}>
+            <Link
+              href={`/products/purchase/${paymentIntent.metadata.productId}`}
+            >
               <Button className="bg-red-500 my-2 w-full" variant="ghost">
                 Try again.
               </Button>

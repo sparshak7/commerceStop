@@ -30,7 +30,7 @@ const BuyProduct = async({params}: BuyProductProps) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: product?.price!,
     currency: "inr",
-    metadata: {productId: product?.id}
+    metadata: {productId: product?.id, userId: user?.id}
   })
 
   if(paymentIntent.client_secret == null) {

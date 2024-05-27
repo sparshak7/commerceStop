@@ -47,8 +47,9 @@ model Cart {
 
 model Purchased {
   purchaseId String   @id @default(uuid())
-  id         String   
+  id         String
   Product    Product? @relation(fields: [id], references: [id])
   createdAt  DateTime @default(now())
   kindeAuth  String
+  pricePaid  Int
 }
