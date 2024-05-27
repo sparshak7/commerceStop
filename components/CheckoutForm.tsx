@@ -10,7 +10,14 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Button } from "./ui/button";
 import { FormEvent, useState } from "react";
 
@@ -24,62 +31,78 @@ const stripePromise = loadStripe(
 );
 
 const CheckoutForm = ({ product, clientSecret }: CheckoutFormProps) => {
- 
   return (
-    <div className="p-4">
-      <div className="flex gap-4 items-center mb-4">
-        <div className="relative">
-          <Image
-            alt={product.name}
-            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product?.image}`}
-            fill={true}
-            style={{objectFit: "cover"}}
-          />
+    <div className="pb-16 lg:p-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="flex flex-col px-2 pt-20 h-full items-center justify-center">
+          <div className="relative h-[200px] w-full">
+            <Image
+              alt={product.name}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product?.image}`}
+              fill
+              className="object-contain"
+            />
+          </div>
+          <div className="mt-8">
+            <h1 className="text-2xl font-bold">{product.name}</h1>
+          </div>
         </div>
-        <div className="flex flex-col gap-6">
-          <h1 className="text-2xl font-bold">{product.name}</h1>
-          <h2 className="text-xl font-bold">
-            ₹{new Intl.NumberFormat().format(product.price)}
-          </h2>
-          <p className="text-lg line-clamp-5">{product.description}</p>
+        <div className="flex px-4 pt-20 h-full items-center justify-center">
+          <Elements
+            options={{ clientSecret, appearance: { theme: "night" } }}
+            stripe={stripePromise}
+          >
+            <Form price={product.price} />
+          </Elements>
         </div>
       </div>
-      <Elements options={{ clientSecret, appearance: {theme: "night"} }} stripe={stripePromise}>
-        <Form/>
-      </Elements>
     </div>
   );
 };
 
-function Form() {
+function Form({ price }: { price: number }) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [errors, setError] = useState<string>();
 
   function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    if(stripe==null || elements==null) return
-    setLoading(true)
+    e.preventDefault();
+    if (stripe == null || elements == null) return;
+    setLoading(true);
 
-    stripe.confirmPayment({elements, confirmParams: {
-      return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`
-    }}).then(({error}) => {
-      if(error.type === "card_error" || error.type === "validation_error") {
-        setError(error.message)
-      } else {
-        console.log(error)
-        setError("An unexpected error occurred.")
-      }
-    }).finally(() => {
-      setLoading(false)
-    })
+    stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/stripe/purchase-success`,
+        },
+      })
+      .then(({ error }) => {
+        if (error.type === "card_error" || error.type === "validation_error") {
+          setError(error.message);
+        } else {
+          console.log(error);
+          setError("An unexpected error occurred.");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-full">
       <Card>
         <CardHeader>
-          <CardTitle>Checkout</CardTitle>
+          <div className="flex flex-col gap-2">
+            <CardTitle>Checkout</CardTitle>
+            <CardTitle className="text-md text-gray-400 font-semibold">{`Price to pay: ₹${new Intl.NumberFormat(
+              "en-IN"
+            ).format(price)}`}</CardTitle>
+            <CardTitle className="text-sm font-bold text-red-500">
+              Please use the India Stripe Test Card Number 4000003560000008. This is a personal project so refrain from using actual card number.
+            </CardTitle>
+          </div>
           {errors && (
             <CardDescription className="text-destructive">
               {errors}

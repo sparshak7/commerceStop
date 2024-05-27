@@ -44,7 +44,7 @@ const SearchPage = async({searchParams}: SearchPageProps) => {
   }
 
   return (
-    <div className="pb-28 md:pb-2">
+    <div className="pb-28 md:p-2">
       <Search />
       <div className="mt-4">
         {searchPerformed ? (

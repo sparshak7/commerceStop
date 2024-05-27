@@ -20,12 +20,15 @@ const CartItems = async ({ params }: CartItemsProps) => {
   });
 
   if (cart.length === 0) {
-    return <div className="flex justify-center items-center text-2xl">
-      <div className="flex gap-4 items-center">
-        <GoBack />
+    return (
+      <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
+        {/* <div className="flex gap-4 items-center">
+          <GoBack />
+          Your cart is empty.
+        </div> */}
         Your cart is empty.
-      </div>  
-    </div>;
+      </div>
+    );
   }
 
   return (

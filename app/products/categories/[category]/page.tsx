@@ -18,13 +18,13 @@ const Category = async ({ params }: CategoryProps) => {
 
   if (products === null || products.length === 0)
     return (
-      <div className="text-secondary-foreground flex justify-center items-center text-2xl font-medium">
+      <div className="mt-64 mb:mt-72 text-secondary-foreground flex justify-center items-center text-2xl font-medium">
         No products found
       </div>
     );
 
   return (
-    <div className="pb-28 mb:pb-2 px-4">
+    <div className="pb-28 mb:p-2">
       <h1 className="text-2xl font-medium mb-4">Results for {params.category}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
         {products.map((product) => (

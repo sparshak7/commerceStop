@@ -26,16 +26,6 @@ const BuyProduct = async({params}: BuyProductProps) => {
     amount: product?.price!,
     currency: "inr",
     description: product?.description!.slice(0,500),
-    customer: user?.given_name!,
-    shipping: {name: user?.given_name!, address: {
-      city: "Kolkata",
-      state: "West Bengal",
-      country: "IN",
-    }},
-    metadata: {
-      name: product?.id!,
-    }
-
   })
 
   if(paymentIntent.client_secret == null) {

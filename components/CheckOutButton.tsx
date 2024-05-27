@@ -36,3 +36,4 @@ const CheckOutButton = async({product}: CheckOutProps) => {
   );
 }
 export default CheckOutButton
+

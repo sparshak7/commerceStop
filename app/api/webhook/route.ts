@@ -46,3 +46,53 @@ export async function POST(req: NextRequest ) {
     }
   }
 }
+
+// import Stripe from "stripe";
+// import { NextResponse, NextRequest } from "next/server";
+// import prisma from "@/app/lib/db";
+// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+// export async function POST(req: NextRequest, res: NextResponse) {
+//   const { productId, userId } = await req.json()
+//   try {
+//     // Fetch product details from the database
+//     const product = await prisma.product.findUnique({
+//       where: { id: productId },
+//     });
+
+//     if (!product) {
+//       return NextResponse.json({ error: "Product not found" });
+//     }
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       line_items: [
+//         {
+//           price_data: {
+//             currency: "inr",
+//             product_data: {
+//               name: product.name,
+//             },
+//             unit_amount: product.price * 100
+//           },
+//           quantity: 1,
+//         },
+//       ],
+//       mode: "payment",
+//       success_url: `https://localhost:3000`,
+//       cancel_url: `https://localhost:3000`,
+//       metadata: {
+//         productId,
+//         userId,
+//       },
+//     });
+
+//     NextResponse.json({ id: session.id });
+//   } catch (error) {
+//     NextResponse.json({ error: error });
+//   }
+// }
+
+
+
