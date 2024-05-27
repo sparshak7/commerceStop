@@ -62,25 +62,23 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           />
         </div>
         <div className="items-center md:items-start flex flex-col gap-4 justify-center p-2 md:w-1/2">
-          <h1 className="text-2xl font-bold">{product.name}</h1>
+          <h1 className="text-2xl font-bold">{product?.name}</h1>
           <h2 className="text-xl font-bold">
-            ₹{new Intl.NumberFormat("en-IN").format(product.price)}
+            ₹{new Intl.NumberFormat("en-IN").format(product?.price)}
           </h2>
           {/* <p className="text-base font-medium">{product.description}</p> */}
           <div className="flex gap-4 flex-col md:flex-row md:items-center">
-            {!isInCart ? (
-              user ? (
-                <AddToCart id={product.id} />
-              ) : (
-                <Link href="/api/auth/login">
-                  <Button
-                    variant="ghost"
-                    className="my-2 w-full border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
-                  >
-                    Add to Cart
-                  </Button>
-                </Link>
-              )
+            {!user ? (
+              <Link href="/api/auth/login">
+                <Button
+                  variant="ghost"
+                  className="my-2 w-full border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
+                >
+                  Add to Cart
+                </Button>
+              </Link>
+            ) : !isInCart ? (
+              <AddToCart id={product.id} />
             ) : (
               <Link
                 href={`/cart/${user?.id}`}
@@ -92,9 +90,9 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
             {/* <CheckOutButton product={product} /> */}
             <Link
               href={
-                product.isAvailableForPurchase
-                  ? `/products/purchase/${product.id}`
-                  : "#"
+                product.isAvailableForPurchase && user
+                  ? `/products/purchase/${product?.id}`
+                  : "/api/auth/login"
               }
             >
               <Button
@@ -102,7 +100,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
                 variant="ghost"
                 disabled={!product.isAvailableForPurchase}
               >
-                {product.isAvailableForPurchase ? "Buy" : "Out of Stock"}
+                {product?.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
             </Link>
           </div>
@@ -114,7 +112,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           <AccordionItem value="item-1">
             <AccordionTrigger>Product Description</AccordionTrigger>
             <AccordionContent>
-              <p className="text-base font-medium">{product.description}</p>
+              <p className="text-base font-medium">{product?.description}</p>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
@@ -136,12 +134,12 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
       <div className="flex flex-col gap-4 px-4 py-2">
         <h2 className="text-2xl font-bold">Similar products</h2>
         <div className="flex flex-wrap gap-4 items-center">
-          {similarProducts.length === 0 ? (
+          {similarProducts?.length === 0 ? (
             <p className="text-center">No similar products found.</p>
           ) : (
             <div className="flex items-center overflow-x-auto gap-4">
               {similarProducts.map((product) => (
-                <Link href={`/products/${product.id}`} key={product.id}>
+                <Link href={`/products/${product?.id}`} key={product?.id}>
                   <div className="flex flex-col gap-2 items-center border border-border p-2 rounded-2xl hover:bg-gray-900 duration-200 transition ease-in-out w-[200px]">
                     <div className="relative w-[100px] h-[100px]">
                       <Image
@@ -153,10 +151,10 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className="text-lg font-bold line-clamp-1">
-                        {product.name}
+                        {product?.name}
                       </p>
                       <p className="text-gray-500 font-semibold">
-                        ₹{new Intl.NumberFormat("en-IN").format(product.price)}
+                        ₹{new Intl.NumberFormat("en-IN").format(product?.price)}
                       </p>
                     </div>
                   </div>

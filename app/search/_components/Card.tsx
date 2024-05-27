@@ -11,7 +11,7 @@ type CardProps = {
 const Card = ({ product }: CardProps) => {
   return (
     <Link href={`/products/${product.id}`}>
-      <div className="rounded-xl border border-accent p-4 md:hover:bg-accent md:opacity-75 md:transition md:duration-200 md:ease-in-out md:transform md:hover:-skew-y-2 md:h-[500px]">
+      <div className="rounded-xl border border-accent p-4 md:hover:bg-accent md:opacity-75 md:transition md:duration-200 md:ease-in-out md:transform md:hover:-skew-y-2 md:h-[500px] overflow-hidden">
         <div className="relative h-72 overflow-hidden">
           <Image
             src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product.image}`}

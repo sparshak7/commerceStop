@@ -8,6 +8,7 @@ import { redirect } from "next/navigation"
 const page = async () => {
   const {getUser, isAuthenticated} = getKindeServerSession()
   const auth = await isAuthenticated()
+  
   if(!auth) {
     redirect("/")
   }

@@ -33,7 +33,6 @@ model Product {
   updatedAt              DateTime    @updatedAt
   Cart                   Cart[]
   categories             String[]
-  stripe_link            String
   Purchased              Purchased[]
 }
 
@@ -47,8 +46,9 @@ model Cart {
 }
 
 model Purchased {
-  id      String   @id
-  Product Product? @relation(fields: [id], references: [id])
-  createdAt DateTime @default(now())
-  kindeAuth String
+  purchaseId String   @id @default(uuid())
+  id         String   
+  Product    Product? @relation(fields: [id], references: [id])
+  createdAt  DateTime @default(now())
+  kindeAuth  String
 }
