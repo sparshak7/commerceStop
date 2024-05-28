@@ -48,18 +48,18 @@ const CartItems = async ({ params }: CartItemsProps) => {
         </Link>
       </div>
       <div className="flex flex-col gap-4">
-        {cart.map((item) => (
+        {cart?.map((item) => (
           <div
             className="flex justify-between items-center md:hover:bg-accent border-b border-accent py-3 px-2 rounded-2xl mb-4"
-            key={item.Product?.id}
+            key={item?.Product?.id}
           >
             <div className="flex gap-4 items-center">
-              <Link href={`/products/${item.Product?.id}`}>
+              <Link href={`/products/${item?.Product?.id}`}>
                 <div className="relative h-[80px] w-[80px]">
                   <Image
                     fill={true}
-                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item.Product?.image}`}
-                    alt={item.Product?.name!}
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item?.Product?.image}`}
+                    alt={item?.Product?.name!}
                     style={{ objectFit: "contain" }}
                   />
                 </div>
@@ -67,12 +67,12 @@ const CartItems = async ({ params }: CartItemsProps) => {
 
               <div className="flex flex-col gap-2">
                 <h2 className="line-clamp-2 md:line-clamp-none">
-                  {item.Product?.name}
+                  {item?.Product?.name}
                 </h2>
                 <h2>
                   ₹
                   {new Intl.NumberFormat("en-US").format(
-                    item.Product?.price! * item.quantity
+                    item?.Product?.price! * item?.quantity
                   )}
                 </h2>
               </div>
@@ -80,20 +80,20 @@ const CartItems = async ({ params }: CartItemsProps) => {
 
             <div className="flex-col gap-6 md:flex hidden">
               <div className="flex gap-4 items-center">
-                <QuantityChanger id={item.Product?.id!} order="des">
+                <QuantityChanger id={item?.Product?.id!} order="des">
                   <Minus
                     className={`size-6 md:hover:bg-gray-500 rounded-full ${
-                      item.quantity === 1 && "hidden"
+                      item?.quantity === 1 && "hidden"
                     } border border-gray-200`}
                   />
                 </QuantityChanger>
-                <p className="text-lg">{item.quantity}</p>
-                <QuantityChanger id={item.Product?.id!} order="asc">
+                <p className="text-lg">{item?.quantity}</p>
+                <QuantityChanger id={item?.Product?.id!} order="asc">
                   <Plus className="size-6 md:hover:bg-gray-500 rounded-full border border-gray-200" />
                 </QuantityChanger>
               </div>
               <div>
-                <RemoveFromCart id={item.Product?.id!} />
+                <RemoveFromCart id={item?.Product?.id!} />
               </div>
             </div>
             <div className="md:hidden">
@@ -104,22 +104,22 @@ const CartItems = async ({ params }: CartItemsProps) => {
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
                     <div className="flex gap-4 items-center">
-                      <QuantityChanger id={item.Product?.id!} order="des">
+                      <QuantityChanger id={item?.Product?.id!} order="des">
                         <Minus
                           className={`size-6 md:hover:bg-gray-500 rounded-full ${
-                            item.quantity === 1 && "hidden"
+                            item?.quantity === 1 && "hidden"
                           } border border-gray-200`}
                         />
                       </QuantityChanger>
-                      <p className="text-lg">{item.quantity}</p>
-                      <QuantityChanger id={item.Product?.id!} order="asc">
+                      <p className="text-lg">{item?.quantity}</p>
+                      <QuantityChanger id={item?.Product?.id!} order="asc">
                         <Plus className="size-6 md:hover:bg-gray-500 rounded-full border border-gray-200" />
                       </QuantityChanger>
                     </div>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <RemoveFromCart id={item.Product?.id!} />
+                    <RemoveFromCart id={item?.Product?.id!} />
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

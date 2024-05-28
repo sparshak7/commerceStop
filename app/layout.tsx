@@ -34,14 +34,21 @@ export default async function RootLayout({
 }>) {
   const { getPermission, getUser } = getKindeServerSession();
 
-  const user = await getUser();
+  const [user, requiredPermission] = await Promise.all([
+    getUser(),
+    getPermission("admin:perm"),
+  ]);
 
-  const requiredPermission = await getPermission("admin:perm");
+  // const user = await getUser();
+
+  // const requiredPermission = await getPermission("admin:perm");
 
   const cartCount =
     user != null
       ? await prisma.cart.count({ where: { kindeAuth: user?.id } })
       : -1;
+
+    
 
   return (
     <html lang="en">

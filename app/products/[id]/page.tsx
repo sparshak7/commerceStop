@@ -42,10 +42,10 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
   const similarProducts = await prisma.product.findMany({
     where: {
       categories: {
-        hasSome: product.categories,
+        hasSome: product?.categories,
       },
       id: {
-        not: product.id,
+        not: product?.id,
       },
     },
   });
@@ -78,7 +78,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
                 </Button>
               </Link>
             ) : !isInCart ? (
-              <AddToCart id={product.id} />
+              <AddToCart id={product?.id} />
             ) : (
               <Link
                 href={`/cart/${user?.id}`}
@@ -98,7 +98,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               <Button
                 className="bg-red-500 my-2 w-full"
                 variant="ghost"
-                disabled={!product.isAvailableForPurchase}
+                disabled={!product?.isAvailableForPurchase}
               >
                 {product?.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
@@ -151,7 +151,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
                     </div>
                     <div className="flex flex-col gap-1 mt-4 px-2 py-3">
                       <p className="line-clamp-1 italic font-normal">
-                        {product.name}
+                        {product?.name}
                       </p>
                       <h2>
                         ₹{new Intl.NumberFormat("en-IN").format(product?.price)}

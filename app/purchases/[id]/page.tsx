@@ -18,7 +18,7 @@ type PurchaseProps = {
 
 const Purchases = async ({ params, searchParams }: PurchaseProps) => {
   const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 1;
+  const limit = Number(searchParams?.limit) || 2;
   const offset = (currentPage - 1) * limit;
   
   const currentOrder = searchParams.order === "asc" ? "asc" : "desc";
@@ -83,7 +83,7 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
           ))
         )}
       </div>
-      {/* <Pagination total={totalPages} /> */}
+      <Pagination total={totalPages} />
     </div>
   );
 };

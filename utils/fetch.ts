@@ -5,7 +5,7 @@ import prisma from "@/app/lib/db";
 export async function GetPurchases({
   search,
   offset = 0,
-  limit = 1,
+  limit = 2,
 }: {
   search?: string | undefined;
   offset?: number;
