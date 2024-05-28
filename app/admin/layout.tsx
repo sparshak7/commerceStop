@@ -14,11 +14,7 @@ export default async function AdminLayout({
   const isLoggedIn = await isAuthenticated()
   const requiredPermission = await getPermission("admin:perm");
 
-  if(!isLoggedIn) {
-    return redirect("/")
-  }
-
-  if(!requiredPermission?.isGranted){
+  if(!isLoggedIn || !requiredPermission?.isGranted){
     return redirect("/")
   }
 

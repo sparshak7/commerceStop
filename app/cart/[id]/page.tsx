@@ -19,12 +19,15 @@ type CartItemsProps = {
   };
 };
 
-const CartItems = async ({ params }: CartItemsProps) => {
+const CartItems = async({ params }: CartItemsProps) => {
+
   const cart = await prisma.cart.findMany({
     where: { kindeAuth: params.id },
     select: { Product: true, quantity: true, id: true },
     orderBy: { createdAt: "desc" },
   });
+
+  
 
   if(cart == null) {
     return (
