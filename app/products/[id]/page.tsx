@@ -19,18 +19,6 @@ type ProductDetailsProps = {
   };
 };
 
-export async function generateStaticParams() {
-  const data = await prisma.product.findMany();
-
-  if (!data) {
-    return [];
-  }
-
-  return data.map((product) => ({
-    id: product.id,
-  }));
-}
-
 const ProductDetails = async ({ params }: ProductDetailsProps) => {
   const product = await prisma.product.findUnique({ where: { id: params.id } });
   const { getUser } = getKindeServerSession();

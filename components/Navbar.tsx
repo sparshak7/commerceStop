@@ -44,7 +44,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
         </NavLinks>
         {cartCount !== -1 ? (
           <NavLinks
-            href={`/cart/${user?.id}`}
+            href={`/cart/${user && user.id && user.id}`}
           >
             <div className="relative py-2">
               <ShoppingCart className="size-8" />
@@ -65,7 +65,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
       </div>
       <div className="items-center gap-6 flex">
         {!isLoading ? (
-          !isAuthenticated && (
+          !user && (
             <LoginLink className="rounded-2xl px-4 py-2 border border-border bg-secondary text-secondary-foreground hover:opacity-75 transition-opacity duration-200 ease-in-out">
               Login
             </LoginLink>
@@ -73,7 +73,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
         ) : (
           <Loader2 className="size-7 animate-spin" />
         )}
-        {user && (
+        {user && user.picture && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               {user?.picture && (
@@ -81,7 +81,7 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
                   width={45}
                   height={45}
                   alt="User Image"
-                  src={user?.picture}
+                  src={user.picture}
                   className="rounded-full cursor-pointer"
                 />
               )}

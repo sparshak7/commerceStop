@@ -21,15 +21,22 @@ type CartItemsProps = {
 
 const CartItems = async({ params }: CartItemsProps) => {
 
+  if(!params.id) {
+    return (
+      <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
+        Something went wrong.
+      </div>
+    );
+  } 
+
   const cart = await prisma.cart.findMany({
     where: { kindeAuth: params.id },
     select: { Product: true, quantity: true, id: true },
     orderBy: { createdAt: "desc" },
   });
 
-  
 
-  if(cart == null) {
+  if(cart === null) {
     return (
       <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
         Something went wrong.
@@ -59,7 +66,7 @@ const CartItems = async({ params }: CartItemsProps) => {
         </Link> */}
       </div>
       <div className="flex flex-col gap-4">
-        {cart?.map((item) => (
+        {cart && cart?.map((item) => (
           <div
             className="flex justify-between items-center md:hover:bg-accent border-b border-accent py-3 px-2 rounded-2xl mb-4"
             key={item?.Product?.id!}

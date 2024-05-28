@@ -2,7 +2,7 @@ import ProductTable from "@/components/ProductTable"
 import { Button } from "@/components/ui/button"
 import { Link } from "next-view-transitions"
 
-const page = async() => {
+const page = () => {
 
   return (
     <div className="flex flex-col gap-6">

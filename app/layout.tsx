@@ -44,13 +44,9 @@ export default async function RootLayout({
   // const requiredPermission = await getPermission("admin:perm");
 
   let cartCount = -1;
-  try {
-    cartCount =
-      user != null
-        ? await prisma.cart.count({ where: { kindeAuth: user?.id } })
-        : -1;
-  } catch (error) {
-    console.error("Error counting cart items:", error);
+
+  if(user && user.id) {
+    cartCount = await prisma.cart.count({ where: { kindeAuth: user?.id } })
   }
 
   return (
