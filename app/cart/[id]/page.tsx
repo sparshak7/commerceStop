@@ -26,6 +26,14 @@ const CartItems = async ({ params }: CartItemsProps) => {
     orderBy: { createdAt: "desc" },
   });
 
+  if(cart == null) {
+    return (
+      <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
+        Something went wrong.
+      </div>
+    );
+  }
+
   if (cart.length === 0) {
     return (
       <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
@@ -51,14 +59,14 @@ const CartItems = async ({ params }: CartItemsProps) => {
         {cart?.map((item) => (
           <div
             className="flex justify-between items-center md:hover:bg-accent border-b border-accent py-3 px-2 rounded-2xl mb-4"
-            key={item?.Product?.id}
+            key={item?.Product?.id!}
           >
             <div className="flex gap-4 items-center">
-              <Link href={`/products/${item?.Product?.id}`}>
+              <Link href={`/products/${item?.Product?.id!}`}>
                 <div className="relative h-[80px] w-[80px]">
                   <Image
                     fill={true}
-                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item?.Product?.image}`}
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}/storage/v1/object/public/Zephyr-products/${item?.Product?.image!}`}
                     alt={item?.Product?.name!}
                     style={{ objectFit: "contain" }}
                   />
@@ -67,7 +75,7 @@ const CartItems = async ({ params }: CartItemsProps) => {
 
               <div className="flex flex-col gap-2">
                 <h2 className="line-clamp-2 md:line-clamp-none">
-                  {item?.Product?.name}
+                  {item?.Product?.name!}
                 </h2>
                 <h2>
                   ₹
