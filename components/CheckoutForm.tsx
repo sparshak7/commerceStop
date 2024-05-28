@@ -37,6 +37,7 @@ const CheckoutForm = ({ product, clientSecret }: CheckoutFormProps) => {
 
   return (
     <div className="pb-16 lg:p-2">
+      <h1 className="font-bold text-red-500 text-center tracking-wide">This is in experimentation. May not work as intended.</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex flex-col px-2 pt-20 h-full items-center justify-center">
           <div className="relative h-[200px] w-full">

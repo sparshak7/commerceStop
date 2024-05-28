@@ -88,7 +88,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               </Link>
             )}
             {/* <CheckOutButton product={product} /> */}
-            {/* <Link
+            <Link
               href={
                 product.isAvailableForPurchase && user
                   ? `/products/purchase/${product?.id}`
@@ -102,7 +102,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               >
                 {product?.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
-            </Link> */}
+            </Link>
           </div>
         </div>
       </div>

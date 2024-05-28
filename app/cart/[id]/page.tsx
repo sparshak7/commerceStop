@@ -56,14 +56,14 @@ const CartItems = async({ params }: CartItemsProps) => {
     <div className="pb-28 px-4 md:pb-2">
       <div className="flex items-center justify-between gap-2 mb-6">
         <h1 className="text-2xl">Your Cart Items</h1>
-        {/* <Link href={`/purchases/${params.id}?page=1`}>
+        <Link href={`/purchases/${params.id}?page=1`}>
           <Button
             variant="ghost"
             className="border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
           >
             Your Orders
           </Button>
-        </Link> */}
+        </Link>
       </div>
       <div className="flex flex-col gap-4">
         {cart && cart?.map((item) => (
