@@ -83,7 +83,7 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
           ))
         )}
       </div>
-      <Pagination total={totalPages} />
+      {/* <Pagination total={totalPages} /> */}
     </div>
   );
 };
