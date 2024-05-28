@@ -131,31 +131,31 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           </AccordionItem>
         </Accordion>
       </div>
-      <div className="flex flex-col gap-4 px-4 py-2">
+      <div className="px-4 py-2">
         <h2 className="text-2xl font-bold">Similar products</h2>
-        <div className="flex flex-wrap gap-4 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4">
           {similarProducts?.length === 0 ? (
-            <p className="text-center">No similar products found.</p>
+            <p className="text-center w-full">No similar products found.</p>
           ) : (
             <div className="flex items-center overflow-x-auto gap-4">
               {similarProducts.map((product) => (
                 <Link href={`/products/${product?.id}`} key={product?.id}>
-                  <div className="flex flex-col gap-2 items-center border border-border p-2 rounded-2xl hover:bg-gray-900 duration-200 transition ease-in-out w-[200px]">
-                    <div className="relative w-[100px] h-[100px]">
+                  <div className="rounded-xl border border-accent p-4 md:hover:bg-accent md:opacity-75 md:transition md:duration-200 md:ease-in-out md:transform md:hover:-skew-y-2 overflow-hidden md:h-[300px] h-[250px]">
+                    <div className="relative overflow-hidden md:h-[170px] h-[125px]">
                       <Image
                         src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product?.image}`}
                         alt={product?.name}
                         fill
-                        className="object-contain"
+                        className="object-contain w-full h-auto"
                       />
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <p className="text-lg font-bold line-clamp-1">
-                        {product?.name}
+                    <div className="flex flex-col gap-1 mt-4 px-2 py-3">
+                      <p className="line-clamp-1 italic font-normal">
+                        {product.name}
                       </p>
-                      <p className="text-gray-500 font-semibold">
+                      <h2>
                         ₹{new Intl.NumberFormat("en-IN").format(product?.price)}
-                      </p>
+                      </h2>
                     </div>
                   </div>
                 </Link>

@@ -1,7 +1,14 @@
 import prisma from "@/app/lib/db";
 import GoBack from "@/components/GoBack";
 import { QuantityChanger, RemoveFromCart } from "@/components/ProductActions";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ArrowLeft, Minus, MoreVertical, Plus } from "lucide-react";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
@@ -29,7 +36,17 @@ const CartItems = async ({ params }: CartItemsProps) => {
 
   return (
     <div className="pb-28 px-4 md:pb-2">
-      <h1 className="mb-6 text-2xl">Your Cart Items</h1>
+      <div className="flex items-center justify-between gap-2 mb-6">
+        <h1 className="text-2xl">Your Cart Items</h1>
+        <Link href={`/purchases/${params.id}?page=1`}>
+          <Button
+            variant="ghost"
+            className="border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
+          >
+            Your Orders
+          </Button>
+        </Link>
+      </div>
       <div className="flex flex-col gap-4">
         {cart.map((item) => (
           <div
@@ -43,7 +60,7 @@ const CartItems = async ({ params }: CartItemsProps) => {
                     fill={true}
                     src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item.Product?.image}`}
                     alt={item.Product?.name!}
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain" }}
                   />
                 </div>
               </Link>

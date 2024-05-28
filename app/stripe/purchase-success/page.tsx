@@ -55,7 +55,7 @@ const PaymentSuccess = async ({ searchParams }: PaymentSuccessProps) => {
               You have succesfully bought the product.
             </p>
             <Link
-              href={`/purchases/${user?.id}`}
+              href={`/purchases/${user?.id}?page=1`}
             >
               <Button className="bg-red-500 my-2 w-full" variant="ghost">
                 Check orders
