@@ -22,7 +22,7 @@ type CartItemsProps = {
 const CartItems = async ({ params }: CartItemsProps) => {
   const cart = await prisma.cart.findMany({
     where: { kindeAuth: params.id },
-    select: { Product: true, quantity: true },
+    select: { Product: true, quantity: true, id: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -93,7 +93,7 @@ const CartItems = async ({ params }: CartItemsProps) => {
                 </QuantityChanger>
               </div>
               <div>
-                <RemoveFromCart id={item?.Product?.id!} />
+                <RemoveFromCart id={item?.id} userId={params.id} />
               </div>
             </div>
             <div className="md:hidden">
@@ -119,7 +119,7 @@ const CartItems = async ({ params }: CartItemsProps) => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <RemoveFromCart id={item?.Product?.id!} />
+                    <RemoveFromCart id={item?.Product?.id!} userId={params.id} />
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

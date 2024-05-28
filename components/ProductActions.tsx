@@ -125,14 +125,14 @@ export const QuantityChanger = ({
   );
 };
 
-export const RemoveFromCart = ({ id }: { id: string }) => {
+export const RemoveFromCart = ({ id, userId }: { id: string, userId: string }) => {
   const [isPending, startTransition] = useTransition();
   return (
     <Button
       disabled={isPending}
       onClick={() =>
         startTransition(async () => {
-          await deleteFromCart(id);
+          await deleteFromCart(id, userId);
           toast.success("Removed from cart!", {
             position: "bottom-right",
           });

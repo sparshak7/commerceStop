@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   description:
     "Welcome to CommerceStop, your ultimate destination for all things ecommerce! Whether you're looking for the latest gadgets, trendy fashion, or everyday essentials, we've got you covered. Our user-friendly platform offers a seamless shopping experience with a wide range of high-quality products at unbeatable prices. Shop with confidence, knowing that our dedicated customer service team is here to support you every step of the way. Discover the joy of hassle-free online shopping at CommerceStop today!",
   openGraph: {
-    images: ["/logo_white.png"]
+    images: ["/logo_white.png"],
   },
   alternates: {
-    canonical: "/"
-  }
+    canonical: "/",
+  },
 };
 
 export default async function RootLayout({
@@ -43,12 +43,15 @@ export default async function RootLayout({
 
   // const requiredPermission = await getPermission("admin:perm");
 
-  const cartCount =
-    user != null
-      ? await prisma.cart.count({ where: { kindeAuth: user?.id } })
-      : -1;
-
-    
+  let cartCount = -1;
+  try {
+    cartCount =
+      user != null
+        ? await prisma.cart.count({ where: { kindeAuth: user?.id } })
+        : -1;
+  } catch (error) {
+    console.error("Error counting cart items:", error);
+  }
 
   return (
     <html lang="en">

@@ -137,7 +137,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
           {similarProducts?.length === 0 ? (
             <p className="text-center w-full">No similar products found.</p>
           ) : (
-            <div className="flex items-center overflow-x-auto gap-4">
+            <div className="flex items-center gap-4">
               {similarProducts.map((product) => (
                 <Link href={`/products/${product?.id}`} key={product?.id}>
                   <div className="rounded-xl border border-accent p-4 md:hover:bg-accent md:opacity-75 md:transition md:duration-200 md:ease-in-out md:transform md:hover:-skew-y-2 overflow-hidden md:h-[300px] h-[250px]">
