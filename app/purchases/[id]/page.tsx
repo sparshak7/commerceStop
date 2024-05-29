@@ -1,7 +1,7 @@
 import prisma from "@/app/lib/db";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
-import Pagination from "./_components/Pagination";
+import Pagination from "../../../components/Pagination";
 import Choose from "./_components/Choose";
 import { GetPurchases } from "@/utils/fetch";
 
@@ -20,11 +20,14 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
   const currentPage = Number(searchParams?.page) || 1;
   const limit = Number(searchParams?.limit) || 2;
   const offset = (currentPage - 1) * limit;
-  
+
   const currentOrder = searchParams.order === "asc" ? "asc" : "desc";
 
-  const {data, totalPages, totalCount} = await GetPurchases({offset, search: params.id, limit})
-
+  const { data, totalPages, totalCount } = await GetPurchases({
+    offset,
+    search: params.id,
+    limit,
+  });
 
   if (totalCount === 0) {
     return (
@@ -63,7 +66,7 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
 
                 <div className="flex flex-col gap-2">
                   <h2 className="line-clamp-2 md:line-clamp-none">
-                    {item.Product?.name}
+                    {`${item.Product?.name} (x${item.quantity})`}
                   </h2>
                   <h2 className="line-clamp-2 md:line-clamp-none">
                     Purchased on:{" "}

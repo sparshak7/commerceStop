@@ -1,26 +1,27 @@
 import { Product } from "@prisma/client";
 import prisma from "../lib/db";
-import Search from "./_components/Search"
+import Search from "./_components/Search";
 import Card from "./_components/Card";
-import ProductPagination from "@/components/ProductPagination";
+import Pagination from "../../components/Pagination";
 
 type SearchPageProps = {
   searchParams: {
     query?: string;
     page?: string;
-  }
-}
+    limit?: string;
+  };
+};
 
-const SearchPage = async({searchParams}: SearchPageProps) => {
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
+  const limit = Number(searchParams?.limit) || 1;
+  const offset = (currentPage - 1) * limit;
   let searchRes: Product[] = [];
   let searchPerformed = false;
-  const itemsPerPage = 1;
   let totalItems = 0;
 
   if (query.trim() !== "") {
-    const skip = (currentPage - 1) * itemsPerPage;
     searchRes = await prisma.product.findMany({
       where: {
         name: {
@@ -28,8 +29,8 @@ const SearchPage = async({searchParams}: SearchPageProps) => {
           mode: "insensitive",
         },
       },
-      skip,
-      take: itemsPerPage,
+      skip: offset,
+      take: limit,
     });
 
     totalItems = await prisma.product.count({
@@ -65,15 +66,11 @@ const SearchPage = async({searchParams}: SearchPageProps) => {
           </div>
         )}
         {searchPerformed && searchRes.length > 0 && (
-          <ProductPagination
-            currentPage={currentPage}
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
-          />
+          <Pagination total={totalItems} />
         )}
       </div>
       {/* <ProductPagination /> */}
     </div>
   );
-}
-export default SearchPage
+};
+export default SearchPage;

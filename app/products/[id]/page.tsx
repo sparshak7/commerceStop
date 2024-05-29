@@ -12,6 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import CheckOutButton from "@/components/CheckOutButton";
+import { BuyProduct } from "@/actions/product-actions";
+import Quantity from "./_components/Quantity";
 
 type ProductDetailsProps = {
   params: {
@@ -88,7 +90,7 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               </Link>
             )}
             {/* <CheckOutButton product={product} /> */}
-            <Link
+            {/* <Link
               href={
                 product.isAvailableForPurchase && user
                   ? `/products/purchase/${product?.id}`
@@ -102,7 +104,8 @@ const ProductDetails = async ({ params }: ProductDetailsProps) => {
               >
                 {product?.isAvailableForPurchase ? "Buy" : "Out of Stock"}
               </Button>
-            </Link>
+            </Link> */}
+            <Quantity isAvailable={product.isAvailableForPurchase} id={product.id}/>
           </div>
         </div>
       </div>

@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const Pagination = ({ total }: { total: number }) => {
   const searchParams = useSearchParams();
@@ -18,8 +17,8 @@ const Pagination = ({ total }: { total: number }) => {
 
 
   return (
-    <div className="flex justify-center items-center gap-4 mt-4">
-      <Button size="icon" asChild>
+    <div className="flex justify-center items-center gap-8 mt-4">
+      <Button size="icon" asChild variant="outline">
         <Link
           href={createPageURL(currentPage - 1)}
           className={
@@ -29,8 +28,8 @@ const Pagination = ({ total }: { total: number }) => {
           -
         </Link>
       </Button>
-      <p className="text-secondary-foreground">{currentPage}</p>
-      <Button size="icon" asChild>
+      <p className="text-secondary-foreground">{currentPage}/{total}</p>
+      <Button size="icon" asChild variant="outline">
         <Link
           href={createPageURL(currentPage + 1)}
           className={

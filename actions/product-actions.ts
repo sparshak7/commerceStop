@@ -7,6 +7,7 @@ import prisma from "../app/lib/db";
 import { notFound, redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { revalidatePath } from "next/cache";
+import { stripe } from "@/utils/stripe";
 
 const fileSchema = z.instanceof(File, { message: "Required." });
 const imageSchema = fileSchema.refine(
@@ -213,4 +214,42 @@ export async function changeQuantity(id: string, order: string) {
     });
   }
   revalidatePath("/cart/:id")
+}
+
+export async function BuyProduct(formData: FormData) {
+  const id = formData.get("id") as string;
+  const quantity = formData.get("quantity") as string;
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  const data = await prisma.product.findUnique({ where: { id }, select: {
+    price: true,
+    name: true,
+    image: true,
+  } });
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [
+      {
+        price_data: {
+          currency: "inr",
+          unit_amount: Math.round((data?.price as number) * 100),
+          product_data: {
+            name: data?.name as string,
+            images: [`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${data?.image as string}`],
+          },
+        },
+        quantity: parseInt(quantity),
+      },
+    ],
+    metadata: {
+      productId: id,
+      userId: user?.id as string,
+      quantity,
+    },
+    success_url: `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}/payment/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}/payment/cancel`,
+  });
+
+  return redirect(session.url as string)
 }

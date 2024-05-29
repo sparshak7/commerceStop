@@ -9,9 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // model User {
@@ -53,4 +53,5 @@ model Purchased {
   createdAt  DateTime @default(now())
   kindeAuth  String
   pricePaid  Int
+  quantity   String
 }

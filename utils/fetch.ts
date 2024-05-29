@@ -13,7 +13,7 @@ export async function GetPurchases({
 }) {
   const data = await prisma.purchased.findMany({
     where: { kindeAuth: search },
-    select: { Product: true, createdAt: true},
+    select: { Product: true, createdAt: true, quantity: true},
     orderBy: { createdAt: "desc" },
     skip: offset,
     take: limit,
