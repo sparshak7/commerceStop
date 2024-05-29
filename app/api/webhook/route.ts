@@ -14,17 +14,17 @@ export async function POST(req: NextRequest ) {
     process.env.STRIPE_WEBHOOK_SECRET!
   );
   
-  if(event.type === "charge.succeeded") {
+  if(event.type === "payment_intent.succeeded") {
     const charge = event.data.object
 
     const productId = charge.metadata.productId
     const userId = charge.metadata.userId
-    const email = charge.billing_details.email
+    // const email = charge.billing_details.email
     const price = charge.amount
 
     const product = await prisma.product.findUnique({where: {id: productId}})
 
-    if(product == null || email == null) {
+    if(product == null) {
       return new NextResponse("Bad Request", {status: 400})
     }
 

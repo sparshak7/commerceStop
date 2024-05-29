@@ -111,7 +111,7 @@ const CartItems = async({ params }: CartItemsProps) => {
                 </QuantityChanger>
               </div>
               <div>
-                <RemoveFromCart id={item?.id} userId={params.id} />
+                <RemoveFromCart id={item?.id} />
               </div>
             </div>
             <div className="md:hidden">
@@ -137,7 +137,7 @@ const CartItems = async({ params }: CartItemsProps) => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <RemoveFromCart id={item?.Product?.id!} userId={params.id} />
+                    <RemoveFromCart id={item?.Product?.id!} />
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

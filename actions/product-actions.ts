@@ -192,8 +192,10 @@ export async function addToCart(id: string) {
   revalidatePath("/");
 }
 
-export async function deleteFromCart(id: string, userId: string) {
-  await prisma.cart.delete({ where: { kindeAuth: userId, id } });
+export async function deleteFromCart(id: string) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  await prisma.cart.delete({ where: { kindeAuth: user?.id, id } });
   revalidatePath(`/cart/${id}`);
 }
 
