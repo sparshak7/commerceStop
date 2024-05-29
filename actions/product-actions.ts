@@ -196,7 +196,7 @@ export async function deleteFromCart(id: string) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   await prisma.cart.delete({ where: { kindeAuth: user?.id, id } });
-  revalidatePath(`/cart/${id}`);
+  revalidatePath(`/cart/:id`);
 }
 
 export async function changeQuantity(id: string, order: string) {
