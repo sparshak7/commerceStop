@@ -22,7 +22,7 @@ const Card = ({ product }: CardProps) => {
         </div>
         <div className="flex flex-col gap-1 mt-4 px-2 py-3">
           <p className="line-clamp-1 italic font-normal">{product?.name}</p>
-          <h2>₹{new Intl.NumberFormat("en-US").format(product?.price)}</h2>
+          <h2>₹{new Intl.NumberFormat("en-IN").format(product?.price)}</h2>
           <div className="flex items-center gap-2 flex-wrap mt-4">
             {product.categories.slice(0, 5).map((c, id) => (
               <Badge

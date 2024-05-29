@@ -2,7 +2,7 @@ import prisma from "@/app/lib/db";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 import Pagination from "../../../components/Pagination";
-import Choose from "./_components/Choose";
+import Choose from "../../../components/Order";
 import { GetPurchases } from "@/utils/fetch";
 
 type PurchaseProps = {
