@@ -14,8 +14,8 @@ type SearchPageProps = {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 1;
+  const currentPage = Number(searchParams?.page) || 2;
+  const limit = Number(searchParams?.limit) || 2;
   const offset = (currentPage - 1) * limit;
   let searchRes: Product[] = [];
   let searchPerformed = false;
@@ -45,7 +45,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   }
 
   return (
-    <div className="pb-28 md:p-2">
+    <div className="pb-8 md:p-2">
       <Search />
       <div className="mt-4">
         {searchPerformed ? (

@@ -8,7 +8,7 @@ const SuccessRoute = async() => {
   const {getUser} = getKindeServerSession()
   const user = await getUser()
   return (
-    <section className="w-full min-h-[80vh] flex justify-center items-center">
+    <section className="w-full min-h-[70vh] md:min-h-[80vh] flex justify-center items-center px-2">
       <Card className="w-[350px]">
         <div className="p-6">
           <div className="w-full flex justify-center">

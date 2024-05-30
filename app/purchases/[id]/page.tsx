@@ -1,8 +1,6 @@
-import prisma from "@/app/lib/db";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 import Pagination from "../../../components/Pagination";
-import Choose from "../../../components/Order";
 import { GetPurchases } from "@/utils/fetch";
 
 type PurchaseProps = {
@@ -31,14 +29,14 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
 
   if (totalCount === 0) {
     return (
-      <div className="mt-64 mb:mt-72 flex justify-center items-center text-2xl">
+      <div className="p-2 mt-60 mb:mt-72 flex justify-center items-center text-xl md:text-2xl text-center">
         You have not purchased anything yet.
       </div>
     );
   }
 
   return (
-    <div className="pb-28 px-4 md:pb-2">
+    <div className="pb-6 px-4 md:pb-2">
       <div className="flex items-center justify-between gap-2 mb-6">
         <h1 className="mb-6 text-2xl">Your Purchase History</h1>
         {/* <Choose currOrder={currentOrder}/> */}
@@ -59,14 +57,23 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
                       fill={true}
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item.Product?.image}`}
                       alt={item.Product?.name!}
-                      style={{ objectFit: "cover" }}
+                      className="object-contain"
                     />
                   </div>
                 </Link>
 
                 <div className="flex flex-col gap-2">
-                  <h2 className="line-clamp-2 md:line-clamp-none">
-                    {`${item.Product?.name} (x${item.quantity})`}
+                  <h2 className="line-clamp-1 md:line-clamp-none">
+                    {item.Product?.name}
+                  </h2>
+                  <h2 className="text-sm text-gray-500">
+                    Quantity: {item.quantity}
+                  </h2>
+                  <h2 className="text-sm text-gray-500">
+                    Price paid: 
+                    <span className="text-red-400 ml-1">
+                       ₹{new Intl.NumberFormat("en-IN").format(item.pricePaid)}
+                    </span>
                   </h2>
                   <h2 className="line-clamp-2 md:line-clamp-none">
                     Purchased on:{" "}

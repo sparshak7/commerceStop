@@ -170,17 +170,23 @@ export async function editProduct(
 }
 
 export async function addToCart(id: string) {
+  let flag;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const existingProduct = await prisma.cart.findUnique({where: {id}})
+  const existingProduct = await prisma.cart.findFirst({where: {kindeAuth: user?.id as string, productId: id}})
+
+  console.log(existingProduct)
+
+  console.log("Inside")
 
   if (existingProduct === null) {
     await prisma.cart.create({
       data: {
         kindeAuth: user?.id as string,
-        id,
+        productId: id,
       },
     });
+    flag = 0;
   } else {
     await prisma.cart.update({
       where: { id: existingProduct.id },
@@ -188,9 +194,11 @@ export async function addToCart(id: string) {
         quantity: existingProduct.quantity + 1,
       },
     });
+    flag = 1;
   }
 
   revalidatePath("/");
+  return flag;
 }
 
 export async function deleteFromCart(id: string) {

@@ -3,7 +3,7 @@ import {BsGithub, BsLinkedin} from "react-icons/bs"
 
 const Footer = () => {
   return (
-    <div className="max-w-6xl mx-auto p-2 flex flex-col gap-4 items-center border-t border-border">
+    <div className="max-w-6xl mx-auto pt-4 md:pb-2 flex flex-col gap-4 items-center border-t border-border">
       <p className="text-sm sm:text-base md:text-lg">
         Made with ❤️ by Sparshak Nag.
       </p>

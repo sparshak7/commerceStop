@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CheckCircle2, Edit2, MoreVertical, Trash2, XCircleIcon } from "lucide-react";
+import { CheckCircle2, MoreVertical, Trash2, XCircleIcon } from "lucide-react";
 import Image from "next/image";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Link } from "next-view-transitions";

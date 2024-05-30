@@ -39,10 +39,6 @@ export default async function RootLayout({
     getPermission("admin:perm"),
   ]);
 
-  // const user = await getUser();
-
-  // const requiredPermission = await getPermission("admin:perm");
-
   let cartCount = -1;
 
   if(user && user.id) {

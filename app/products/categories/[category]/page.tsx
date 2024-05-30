@@ -2,7 +2,6 @@ import prisma from "@/app/lib/db";
 import Card from "@/app/search/_components/Card";
 import Order from "@/components/Order";
 import Pagination from "@/components/Pagination";
-import Sorted from "@/components/Sorted";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 
 type CategoryProps = {
   params: {

@@ -1,8 +1,6 @@
 import prisma from "@/app/lib/db";
-import GoBack from "@/components/GoBack";
 import Pagination from "@/components/Pagination";
 import { QuantityChanger, RemoveFromCart } from "@/components/ProductActions";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, Minus, MoreVertical, Plus } from "lucide-react";
+import { Minus, MoreVertical, Plus } from "lucide-react";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 
@@ -79,17 +77,19 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
           <h1 className="text-sm md:text-xl">Your Cart Items</h1>
           <h3 className="text-md">
             Your current total:{" "}
-            <span className="text-red-500 tracking-wider">₹{new Intl.NumberFormat("en-IN").format(totalSum)}</span>
+            <span className="text-red-500 tracking-wider">
+              ₹{new Intl.NumberFormat("en-IN").format(totalSum)}
+            </span>
           </h3>
         </div>
-        <Link href={`/purchases/${params.id}?page=1`}>
+        {/* <Link href={`/purchases/${params.id}?page=1`}>
           <Button
             variant="ghost"
             className="border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
           >
             Your Orders
           </Button>
-        </Link>
+        </Link> */}
       </div>
       <div className="flex flex-col gap-4">
         {cart &&
@@ -113,8 +113,11 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
                 </Link>
 
                 <div className="flex flex-col gap-2">
-                  <h2 className="line-clamp-2 md:line-clamp-none">
+                  <h2 className="line-clamp-1 md:line-clamp-none">
                     {item?.Product?.name!}
+                  </h2>
+                  <h2 className="text-sm text-gray-500">
+                    Quantity: {item.quantity}
                   </h2>
                   <h2>
                     ₹
@@ -127,7 +130,7 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
 
               <div className="flex-col gap-6 md:flex hidden">
                 <div className="flex gap-4 items-center">
-                  <QuantityChanger id={item?.Product?.id!} order="des">
+                  <QuantityChanger id={item?.id} order="des">
                     <Minus
                       className={`size-6 md:hover:bg-gray-500 rounded-full ${
                         item?.quantity === 1 && "hidden"
@@ -135,7 +138,7 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
                     />
                   </QuantityChanger>
                   <p className="text-lg">{item?.quantity}</p>
-                  <QuantityChanger id={item?.Product?.id!} order="asc">
+                  <QuantityChanger id={item?.id} order="asc">
                     <Plus className="size-6 md:hover:bg-gray-500 rounded-full border border-gray-200" />
                   </QuantityChanger>
                 </div>

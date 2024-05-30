@@ -38,11 +38,12 @@ model Product {
 }
 
 model Cart {
-  id        String   @id
+  id        String   @id @default(uuid())
+  productId String
   kindeAuth String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Product   Product? @relation(fields: [id], references: [id])
+  Product   Product? @relation(fields: [productId], references: [id])
   quantity  Int      @default(1)
 }
 

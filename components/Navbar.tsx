@@ -10,7 +10,13 @@ import { Link } from "next-view-transitions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ComponentProps } from "react";
-import { Loader2, Lock, Search, ShoppingCart } from "lucide-react";
+import {
+  Loader2,
+  Lock,
+  ReceiptIndianRupee,
+  Search,
+  ShoppingCart,
+} from "lucide-react";
 import logo_white from "../public/logo_white.png";
 import {
   DropdownMenu,
@@ -42,10 +48,8 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
         <NavLinks href="/search">
           <Search className="size-8" />
         </NavLinks>
-        {cartCount !== -1 ? (
-          <NavLinks
-            href={`/cart/${user && user.id && user.id}`}
-          >
+        {user && cartCount !== -1 ? (
+          <NavLinks href={`/cart/${user && user.id && user.id}`}>
             <div className="relative py-2">
               <ShoppingCart className="size-8" />
               {cartCount! > 0 && (
@@ -60,6 +64,15 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
         ) : (
           <NavLinks href="/api/auth/login">
             <ShoppingCart className="size-8" />
+          </NavLinks>
+        )}
+        {user ? (
+          <NavLinks href={`/purchases/${user?.id}`}>
+            <ReceiptIndianRupee className="size-6" />
+          </NavLinks>
+        ) : (
+          <NavLinks href="/api/auth/login">
+            <ReceiptIndianRupee className="size-6" />
           </NavLinks>
         )}
       </div>
@@ -89,13 +102,14 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <LogoutLink className="text-red-500 w-full">Log Out</LogoutLink>
+                  <LogoutLink className="text-red-500 w-full">
+                    Log Out
+                  </LogoutLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/profile" className="w-full">Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href={`/purchases/${user?.id}`} className="w-full">Your Orders</Link>
+                  <Link href="/profile" className="w-full">
+                    Profile
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

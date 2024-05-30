@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useTransition } from "react";
 import { DropdownMenuItem } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Loader2, Minus, Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 
 type ActiveToggleProductAdminProps = {
@@ -37,9 +37,14 @@ export const ActiveToggleProductAdmin = ({
       onClick={() =>
         startTransition(async () => {
           await toggleProductAvailability(id, !isAvailableForPurchase);
-          toast.success(`Product is now ${!isAvailableForPurchase ? "available." : "not available."}`, {
-            position: "bottom-right",
-          });
+          toast.success(
+            `Product is now ${
+              !isAvailableForPurchase ? "available." : "not available."
+            }`,
+            {
+              position: "bottom-right",
+            }
+          );
           router.refresh();
         })
       }
@@ -75,7 +80,7 @@ export const DeleteProductAdmin = ({
   );
 };
 
-export const AddToCart = ({ id }: { id: string }) => {
+export const AddToCart = ({ id, quantity }: { id: string, quantity?: boolean }) => {
   const [isPending, startTransition] = useTransition();
   return (
     <div>
@@ -83,10 +88,16 @@ export const AddToCart = ({ id }: { id: string }) => {
         disabled={isPending}
         onClick={() => {
           startTransition(async () => {
-            await addToCart(id);
-            toast.success("Added to cart!", {
-              position: "bottom-right",
-            });
+            const flag = await addToCart(id);
+            if (flag === 0) {
+              toast.success("Added to cart!", {
+                position: "bottom-right",
+              });
+            } else {
+              toast.success("Quantity has been increased!", {
+                position: "bottom-right",
+              });
+            }
           });
         }}
         variant="ghost"
@@ -95,7 +106,7 @@ export const AddToCart = ({ id }: { id: string }) => {
         {isPending ? (
           <Loader2 className="size-4 animate-spin" />
         ) : (
-          "Add to Cart"
+          quantity ? "Add More" : "Add to Cart"
         )}
       </Button>
     </div>

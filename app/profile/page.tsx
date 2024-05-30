@@ -1,7 +1,5 @@
 import Opt from "@/components/Opt"
-import { Button } from "@/components/ui/button"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
-import { Link } from "next-view-transitions"
 import Image from "next/image"
 import { redirect } from "next/navigation"
 
@@ -15,7 +13,7 @@ const page = async () => {
 
   const user = await getUser()
   return (
-    <div className="h-full flex flex-col justify-center gap-6 items-center pb-28 md:pb-2 mt-20">
+    <div className="h-full flex flex-col justify-center gap-6 items-center pb-12 md:pb-2 mt-20">
       <h1 className="text-2xl font-bold">Profile</h1>
       <div className="flex flex-col gap-4 items-center">
         <Image
@@ -29,12 +27,6 @@ const page = async () => {
           {user?.given_name?.concat(" ", user?.family_name!)}
         </p>
         <p className="text-xl text-accent-foreground">{user?.email}</p>
-        <Link
-          href="/"
-          className="p-3 border-border bg-secondary rounded-2xl text-accent-foreground"
-        >
-          Continue Browsing
-        </Link>
         <Opt />
       </div>
     </div>
