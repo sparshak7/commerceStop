@@ -19,7 +19,7 @@ const SuccessRoute = async() => {
               Payment succesful.
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              You have succesfully purchased the product. Check your orders.
+              You have succesfully purchased the product. The receipt has been sent to the email you provided in payment page.
             </p>
             <Button
               className="mt-5 sm:mt-6 border border-border bg-accent hover:opacity-75 duration-100 transition-opacity ease-in-out"
