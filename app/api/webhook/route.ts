@@ -1,6 +1,10 @@
 import { headers } from "next/headers";
 import prisma from "@/app/lib/db";
 import { stripe } from "@/utils/stripe";
+import { Resend } from "resend"
+import ReceiptEmail from "@/components/ReceiptEmail";
+
+const resend = new Resend(process.env.RESEND_API_KEY as string)
 
 export async function POST(req: Request ) {
   const payload = await req.text()
@@ -44,7 +48,20 @@ export async function POST(req: Request ) {
         },
       });
 
-      console.log("Done")
+      const { data, error } = await resend.emails.send({
+        from: "CommerceStop <onboarding@resend.dev>",
+        to: [session.customer_details?.email as string],
+        subject: "Payment Receipt from CommerceStop",
+        react: ReceiptEmail({
+          total: price,
+          name: session.customer_details?.name as string,
+          email: session.customer_details?.email as string,
+          quantity: quantity,
+          productName: product?.name,
+          image: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${product?.image}`,
+        }),
+      });
+
       break;
     }
     default: {

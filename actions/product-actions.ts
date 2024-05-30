@@ -175,10 +175,6 @@ export async function addToCart(id: string) {
   const user = await getUser();
   const existingProduct = await prisma.cart.findFirst({where: {kindeAuth: user?.id as string, productId: id}})
 
-  console.log(existingProduct)
-
-  console.log("Inside")
-
   if (existingProduct === null) {
     await prisma.cart.create({
       data: {
