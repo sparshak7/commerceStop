@@ -77,3 +77,6 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 If you have any questions or feedback, please reach out:
 
 - GitHub: [sparshak7](https://github.com/sparshak7)
+- Email: sparshaknag247@gmail.com
+- Instagram: [exzeitgeist](https://www.instagram.com/exzeitgeist/)
+- LinkedIn: [Sparshak Nag](https://www.linkedin.com/in/sparshak-nag-9211b314b/)
