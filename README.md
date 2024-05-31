@@ -23,7 +23,8 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 - **Stripe Integration**: Secure payment processing with Stripe.
 - **Receipt History**: Authenticated users can view their receipt history.
 - **Admin Panel**: Manage product entries and view analytics.
-
+- **Email Receipt**: Send email receipts to users after purchase.
+  
 ## Tech Stack
 
 - **Frontend Framework**: Next.js 14
@@ -34,6 +35,7 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 - **Database**: Supabase (PostgreSQL)
 - **ORM**: Prisma
 - **Payment Gateway**: Stripe
+- **Email Service**: React Email and Resend
 - **Hosting**: Vercel
 
 ## Installation
@@ -69,7 +71,6 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 
 - **Advanced Sorting and Filtering**: Enhanced options for sorting and filtering products.
 - **Checkout Summary**: Display the total of all cart items during checkout.
-- **Email Receipts**: Send email receipts to users after purchase.
 
 ## Contact
 
@@ -77,3 +78,5 @@ If you have any questions or feedback, please reach out:
 
 - GitHub: [sparshak7](https://github.com/sparshak7)
 - Email: sparshaknag247@gmail.com
+- Instagram: [exzeitgeist](https://www.instagram.com/exzeitgeist/)
+- LinkedIn: [Sparshak Nag](https://www.linkedin.com/in/sparshak-nag-9211b314b/)
