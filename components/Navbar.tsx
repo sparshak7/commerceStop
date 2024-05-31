@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import {
   LoginLink,
-  LogoutLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
 import { Link } from "next-view-transitions";
@@ -18,13 +17,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import logo_white from "../public/logo_white.png";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+import UserNav from "./UserNav";
 
 type NavbarProps = {
   adminPerm?: boolean;
@@ -32,10 +25,10 @@ type NavbarProps = {
 };
 
 const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
-  const { user, isLoading, isAuthenticated } = useKindeBrowserClient();
+  const { user, isLoading } = useKindeBrowserClient();
 
   return (
-    <nav className="max-w-6xl mx-auto px-4 md:px-2 py-2 flex justify-between items-center gap-6 mb-4 border-b border-gray-600">
+    <nav className="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center gap-6 mb-4 border-b border-gray-600">
       <Link href="/">
         <Image alt="brand_logo" src={logo_white} width={90} height={90} />
       </Link>
@@ -86,34 +79,14 @@ const Navbar = ({ adminPerm, cartCount }: NavbarProps) => {
         ) : (
           <Loader2 className="size-7 animate-spin" />
         )}
-        {user && user.picture && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              {user?.picture && (
-                <Image
-                  width={45}
-                  height={45}
-                  alt="User Image"
-                  src={user.picture}
-                  className="rounded-full cursor-pointer"
-                />
-              )}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <LogoutLink className="text-red-500 w-full">
-                    Log Out
-                  </LogoutLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/profile" className="w-full">
-                    Profile
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {user && (
+          <UserNav
+            username={user.given_name as string}
+            email={user.email as string}
+            image={
+              user.picture ?? `https://avatar.vercel.sh/${user.given_name}`
+            }
+          />
         )}
       </div>
     </nav>

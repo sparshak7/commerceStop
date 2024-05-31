@@ -22,12 +22,12 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 - **Shopping Cart**: Add items to the cart and view the total.
 - **Stripe Integration**: Secure payment processing with Stripe.
 - **Receipt History**: Authenticated users can view their receipt history.
-- **Admin Panel**: Manage product entries and view analytics.
+- **Admin Panel**: Manage product entries and view analytics, powered by Zod validation.
 - **Email Receipt**: Send email receipts to users after purchase.
   
 ## Tech Stack
 
-- **Frontend Framework**: Next.js 14
+- **Fullstack Framework**: Next.js 14
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 - **Programming Language**: TypeScript
@@ -37,6 +37,7 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 - **Payment Gateway**: Stripe
 - **Email Service**: React Email and Resend
 - **Hosting**: Vercel
+- **Type Validation**: Zod
 
 ## Installation
 
@@ -74,6 +75,8 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 ## Current Bugs
 
 - **Pagination Bug**: In some pages, the pagination breaks and total amount in a page is displayed incorrectly.
+
+- **Email Issues**: Currently, receipts are not being sent to the user's mail after purchase. I am still working on Resend & React Email so I'll try to fix it ASAP.
 
 ## Contact
 

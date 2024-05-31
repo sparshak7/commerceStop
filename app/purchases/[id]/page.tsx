@@ -30,15 +30,22 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
   const [data, totalCount] = await prisma.$transaction([
     prisma.purchased.findMany({
       where: { kindeAuth: params.id },
-      select: { Product: true, createdAt: true, quantity: true, pricePaid: true },
+      select: {
+        Product: true,
+        createdAt: true,
+        quantity: true,
+        pricePaid: true,
+      },
       orderBy: { createdAt: "desc" },
       skip: offset,
       take: limit,
     }),
     prisma.purchased.count({ where: { kindeAuth: params.id } }),
-  ])
+  ]);
+
 
   const totalPages = Math.ceil(totalCount / limit);
+
 
   if (totalCount === 0) {
     return (
@@ -55,56 +62,52 @@ const Purchases = async ({ params, searchParams }: PurchaseProps) => {
         {/* <Choose currOrder={currentOrder}/> */}
       </div>
       <div className="flex flex-col gap-4">
-        {data.length === 0 ? (
-          <p className="text-center">No more records found.</p>
-        ) : (
-          data.map((item) => (
-            <div
-              className="flex justify-between items-center md:hover:bg-accent border-b border-accent py-3 px-2 rounded-2xl mb-4"
-              key={item.Product?.id}
-            >
-              <div className="flex gap-4 items-center">
-                <Link href={`/products/${item.Product?.id}`}>
-                  <div className="relative h-[80px] w-[80px]">
-                    <Image
-                      fill={true}
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item.Product?.image}`}
-                      alt={item.Product?.name!}
-                      className="object-contain"
-                    />
-                  </div>
-                </Link>
-
-                <div className="flex flex-col gap-2">
-                  <h2 className="line-clamp-1 md:line-clamp-none">
-                    {item.Product?.name}
-                  </h2>
-                  <h2 className="text-sm text-gray-500">
-                    Quantity: {item.quantity}
-                  </h2>
-                  <h2 className="text-sm text-gray-500">
-                    Price paid: 
-                    <span className="text-red-400 ml-1">
-                       ₹{new Intl.NumberFormat("en-IN").format(item.pricePaid)}
-                    </span>
-                  </h2>
-                  <h2 className="line-clamp-2 md:line-clamp-none">
-                    Purchased on:{" "}
-                    {`${new Intl.DateTimeFormat("en-US", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                      timeZone: "Asia/Kolkata",
-                    }).format(item.createdAt)}`}
-                  </h2>
+        {data && data.map((item) => (
+          <div
+            className="flex justify-between items-center md:hover:bg-accent border-b border-accent py-3 px-2 rounded-2xl mb-4"
+            key={item.Product?.id}
+          >
+            <div className="flex gap-4 items-center">
+              <Link href={`/products/${item.Product?.id}`}>
+                <div className="relative h-[80px] w-[80px]">
+                  <Image
+                    fill={true}
+                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${item.Product?.image}`}
+                    alt={item.Product?.name!}
+                    className="object-contain"
+                  />
                 </div>
+              </Link>
+
+              <div className="flex flex-col gap-2">
+                <h2 className="line-clamp-1 md:line-clamp-none">
+                  {item.Product?.name}
+                </h2>
+                <h2 className="text-sm text-gray-500">
+                  Quantity: {item.quantity}
+                </h2>
+                <h2 className="text-sm text-gray-500">
+                  Price paid:
+                  <span className="text-red-400 ml-1">
+                    ₹{new Intl.NumberFormat("en-IN").format(item.pricePaid)}
+                  </span>
+                </h2>
+                <h2 className="line-clamp-2 md:line-clamp-none">
+                  Purchased on:{" "}
+                  {`${new Intl.DateTimeFormat("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                    timeZone: "Asia/Kolkata",
+                  }).format(item.createdAt)}`}
+                </h2>
               </div>
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </div>
       <Pagination total={totalPages} />
     </div>
