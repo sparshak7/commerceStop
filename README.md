@@ -70,7 +70,10 @@ GitHub Repository: [sparshak7/commerceStop](https://github.com/sparshak7/commerc
 ## Future Features
 
 - **Advanced Sorting and Filtering**: Enhanced options for sorting and filtering products.
-- **Checkout Summary**: Display the total of all cart items during checkout.
+
+## Current Bugs
+
+- **Pagination Bug**: In some pages, the pagination breaks and total amount in a page is displayed incorrectly.
 
 ## Contact
 
