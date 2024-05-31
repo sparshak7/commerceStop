@@ -1,7 +1,7 @@
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 import Pagination from "../../../components/Pagination";
-import { GetPurchases } from "@/utils/fetch";
+import prisma from "@/app/lib/db";
 
 type PurchaseProps = {
   params: {
@@ -16,16 +16,29 @@ type PurchaseProps = {
 
 const Purchases = async ({ params, searchParams }: PurchaseProps) => {
   const currentPage = Number(searchParams?.page) || 1;
-  const limit = Number(searchParams?.limit) || 2;
+  const limit = Number(searchParams?.limit) || 5;
   const offset = (currentPage - 1) * limit;
 
   const currentOrder = searchParams.order === "asc" ? "asc" : "desc";
 
-  const { data, totalPages, totalCount } = await GetPurchases({
-    offset,
-    search: params.id,
-    limit,
-  });
+  // const { data, totalPages, totalCount } = await GetPurchases({
+  //   offset,
+  //   search: params.id,
+  //   limit,
+  // });
+
+  const [data, totalCount] = await prisma.$transaction([
+    prisma.purchased.findMany({
+      where: { kindeAuth: params.id },
+      select: { Product: true, createdAt: true, quantity: true, pricePaid: true },
+      orderBy: { createdAt: "desc" },
+      skip: offset,
+      take: limit,
+    }),
+    prisma.purchased.count({ where: { kindeAuth: params.id } }),
+  ])
+
+  const totalPages = Math.ceil(totalCount / limit);
 
   if (totalCount === 0) {
     return (

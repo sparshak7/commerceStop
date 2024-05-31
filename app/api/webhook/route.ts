@@ -83,7 +83,7 @@ export async function POST(req: Request) {
 
         const { data, error } = await resend.emails.send({
           from: "CommerceStop <onboarding@resend.dev>",
-          to: [session.customer_details?.email as string],
+          to: session.customer_details?.email as string,
           subject: "Payment Receipt from CommerceStop",
           react: ReceiptEmail({
             total: price,

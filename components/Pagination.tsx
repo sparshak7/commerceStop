@@ -17,7 +17,7 @@ const Pagination = ({ total }: { total: number }) => {
 
 
   return (
-    <div className="flex justify-center items-center gap-8 mt-4">
+    <div className="flex justify-center items-center gap-8 my-4">
       <Button size="icon" asChild variant="outline">
         <Link
           href={createPageURL(currentPage - 1)}
