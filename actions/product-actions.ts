@@ -257,3 +257,39 @@ export async function BuyProduct(formData: FormData) {
 
   return redirect(session.url as string)
 }
+
+export async function CartCheckout() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  const data = await prisma.cart.findMany({
+    where: { kindeAuth: user?.id as string },
+    select: {Product: true, quantity: true, kindeAuth: true}
+  });
+
+  const line_items = data.map((c) => (
+    {
+      price_data: {
+        currency: "inr",
+        unit_amount: Math.round((c.Product?.price as number) * 100),
+        product_data: {
+          name: c.Product?.name as string,
+          images: [`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Zephyr-products/${c.Product?.image as string}`],
+        },
+      },
+      quantity: c.quantity,
+    }
+  ))
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items,
+    metadata: {
+      type: "cart",
+      userId: user?.id as string,
+    },
+    success_url: `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}/payment/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}/payment/cancel`,
+  });
+
+  return redirect(session.url as string);
+}

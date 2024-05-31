@@ -1,6 +1,8 @@
+import { CartCheckout } from "@/actions/product-actions";
 import prisma from "@/app/lib/db";
 import Pagination from "@/components/Pagination";
 import { QuantityChanger, RemoveFromCart } from "@/components/ProductActions";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +13,7 @@ import {
 import { Minus, MoreVertical, Plus } from "lucide-react";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
+import Checkout from "../_components/Checkout";
 
 type CartItemsProps = {
   params: {
@@ -40,7 +43,7 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
   const [cart, total] = await prisma.$transaction([
     prisma.cart.findMany({
       where: { kindeAuth: params.id },
-      select: { Product: true, quantity: true, id: true },
+      select: { Product: true, quantity: true, id: true, productId: true  },
       orderBy: { createdAt: order } as any,
       skip: offset,
       take: limit,
@@ -90,6 +93,7 @@ const CartItems = async ({ params, searchParams }: CartItemsProps) => {
             Your Orders
           </Button>
         </Link> */}
+        <Checkout />
       </div>
       <div className="flex flex-col gap-4">
         {cart &&
